@@ -327,3 +327,7 @@ pip-selfcheck.json
 
 grafana-provisioning/
 influxdb-storage/
+mosquitto/
+.env
+docker-compose proba
+docker-compose-edgex

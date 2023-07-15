@@ -78,6 +78,14 @@ services:
     volumes:
       - db-data:/data:z
 
+  mosquitto:
+    image: eclipse-mosquitto
+    network_mode: host
+    volumes:
+      - ./mosquitto:/conf
+      - ./mosquitto:/data
+      - ./mosquitto:/log
+
   influxdb:
     image: influxdb:latest
     networks:
@@ -99,7 +107,15 @@ services:
       build:
         context: .
         dockerfile: ./visualization/Dockerfile
-        
+      depends_on:
+        - influxdb
+        - mosquitto
+  monitoring:
+      build:
+        context: .
+        dockerfile: ./monitoring/Dockerfile
+      depends_on:
+        - mosquitto
   # The logging service has been deprecated in Geneva release and will be removed in the Hanoi release.
   # All services are configure to send logging to STDOUT, i.e. not remote which requires this logging service
   # If you still must use remote logging, un-comment the block below, all the related depends that have been commented out
@@ -272,7 +288,7 @@ services:
       MessageBus_SubscribeHost_Host: edgex-core-data
       Binding_PublishTopic: events
       # Added for MQTT export using app service
-      WRITABLE_PIPELINE_FUNCTIONS_MQTTSEND_ADDRESSABLE_ADDRESS: 192.168.1.6
+      WRITABLE_PIPELINE_FUNCTIONS_MQTTSEND_ADDRESSABLE_ADDRESS: 172.20.192.1
       WRITABLE_PIPELINE_FUNCTIONS_MQTTSEND_ADDRESSABLE_PORT: 1883
       WRITABLE_PIPELINE_FUNCTIONS_MQTTSEND_ADDRESSABLE_PROTOCOL: tcp
       WRITABLE_PIPELINE_FUNCTIONS_MQTTSEND_ADDRESSABLE_TOPIC: "FISH-POND-SENSOR-DATA"

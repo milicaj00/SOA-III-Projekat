@@ -4,20 +4,21 @@ import json
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-broker_address  = "192.168.1.6"
-topic           = "FISH-POND-SENSOR-DATA"
-dbhost          = "192.168.1.6"
-dbport          = 8086
-dbuser          = "root"
-dbpassword      = "password"
-# dbname          = "sensordata"
-#rAkkPznprMMsaFYknsbogdBxiaHpoP5vxq5VHwpKerhILR522lh_nhi1J0cb8iNc68Kzy1Rf6AviOF_77hFwDw==
-token ='rAkkPznprMMsaFYknsbogdBxiaHpoP5vxq5VHwpKerhILR522lh_nhi1J0cb8iNc68Kzy1Rf6AviOF_77hFwDw=='
-org = 'Jojobi'
-bucket = 'FishPond'
-dburl = "192.168.1.6:8086"
+broker_address = os.getenv('broker_address')
+topic = os.getenv('topic')
+dburl = os.getenv('dburl')
+dbhost = os.getenv('dbhost')
+dbuser = os.getenv('dbuser')
+dbpassword = os.getenv('dbpassword')
+token = os.getenv('token')
+org = os.getenv('org')
+bucket = os.getenv('bucket')
+
 
 def influxDBconnect():
     influxDBConnection = InfluxDBClient(url = dburl, token=token, org=org)

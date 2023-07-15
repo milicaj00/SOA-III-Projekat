@@ -8,6 +8,7 @@ RUN pip install -r /requirements.txt
 
 
 COPY visualization/app.py ./
+COPY visualization/.env ./
 
 
 CMD [ "python", "app.py"]

@@ -4,7 +4,7 @@ import json
 import time
 
 
-edgexip = 'localhost'
+edgexip = '172.20.192.1'
 humval = 40
 tempval = 23
 
@@ -18,12 +18,6 @@ with open("./FishPond.csv") as file:
 
 
 if __name__ == "__main__":
-
-    sensorTypes = [
-            "pH",
-            "ammonia",
-            "nitrate",
-            ]
 
     with open("./FishPond.csv") as file:
         csv_reader = csv.DictReader(file)
@@ -50,5 +44,5 @@ if __name__ == "__main__":
             response = requests.post(url, data=json.dumps(payload), headers=headers, verify=False)
             print(response)
 
-            print('Sent data: ', row['pH'], row['AMMONIA'], row['NITRATE'])
+            print('Sent data: ', row['pH'], row['AMMONIA'], row['NITRATE'], row['TEMPERATURE'])
             time.sleep(5)
