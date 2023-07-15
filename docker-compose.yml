@@ -85,6 +85,8 @@ services:
       - ./mosquitto:/conf
       - ./mosquitto:/data
       - ./mosquitto:/log
+    ports:
+      - "1883:1883"
 
   influxdb:
     image: influxdb:latest

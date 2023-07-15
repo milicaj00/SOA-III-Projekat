@@ -19,6 +19,7 @@ token = os.getenv('token')
 org = os.getenv('org')
 bucket = os.getenv('bucket')
 
+print(broker_address)
 
 def influxDBconnect():
     influxDBConnection = InfluxDBClient(url = dburl, token=token, org=org)
